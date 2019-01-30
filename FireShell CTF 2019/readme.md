@@ -57,7 +57,7 @@ You can follow along at home in a regular python shell by following the guidelin
 
 First, doing `test = {}.__class__.__base__.__subclasses__()` works fine and as expected. We now have the classes list.
 
-Second, we need to access the catch_warnings subclass. In our case, it is the 59th element of the list, but we can't directly access it using brackets, and even if we could, we can't directly use an int. So we need an alternative. `dir(test)` gives a list of the methods we can use. `__getitem__` probably works, but I went with `pop(X)`, which returns the element at the `X` position. This dir also gives us a solution to the `int` problem - `index`.
+Second, we need to access the catch_warnings subclass. In our case, it is the 59th element of the list, but we can't directly access it using brackets, and even if we could, we can't directly use an int. So we need an alternative. `dir(test)` gives a list of the methods we can use. `__getitem__` would work, but it gets filtered out by the javascript, so I went with `pop(X)`, which returns the element at the `X` position. This dir also gives us a solution to the `int` problem - `index`.
 
 Next, we can build a tuple to return us the proper int: `(('a')*59+('b')).index('b')` returns 59. Let's add this in to our command: `test = {}.__class__.__base__.__subclasses__().pop((('a')*59+('b')).index('b'))()`. We can append `._module.__builtins__` without issue to get a dict, from which we need to access the value corresponding to the key `'__import__'`.
 
